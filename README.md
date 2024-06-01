@@ -35,7 +35,7 @@
       - 도움을 받고자 하는 문제를 찍어 업로드 할 수 있다.
 
 
-![image](https://github.com/yerim0227/neogul/assets/91422659/8afc5f9f-9ebc-4b5e-b064-94223b0f8087)
+![image](https://github.com/yerim0227/neogul/assets/91422659/349e3635-9b0f-4d5f-8cbd-5d49e3a8fff0)
 
 ![image](https://github.com/yerim0227/neogul/assets/91422659/df9c63cb-6bbc-4f1e-a7e2-eaf864a1050d)
 
