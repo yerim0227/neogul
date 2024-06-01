@@ -1,0 +1,135 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".MainActivity">
+
+    <!-- RecyclerView for displaying chat messages -->
+
+    <!-- Layout for message input and send button -->
+
+    <RelativeLayout
+        android:id="@+id/message_header_layout"
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
+        android:padding="8dp">
+
+        <!-- 뒤로가기 버튼 -->
+        <ImageButton
+            android:id="@+id/back_button"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="0dp"
+            android:background="@android:color/transparent"
+            android:padding="8dp"
+            android:src="@drawable/activity_chat_back_arrow"
+            android:contentDescription="@string/chat_header_back_btn"/>
+
+        <!-- 채팅방 제목 -->
+        <TextView
+            android:id="@+id/chat_room_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@id/back_button"
+            android:layout_toStartOf="@id/search_button"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:ellipsize="end"
+            android:text="@string/chat_title"
+            android:maxLines="1"
+            android:textSize="18sp"
+            android:contentDescription="@string/chat_room_title"/>
+
+
+        <!-- 돋보기 버튼 -->
+        <ImageButton
+            android:id="@+id/search_button"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="2dp"
+            android:layout_toStartOf="@+id/menu_button"
+            android:background="@android:color/transparent"
+            android:padding="8dp"
+            android:src="@drawable/activity_chat_search_ic"
+            android:contentDescription="@string/chat_header_search_btn"/>
+
+
+        <!-- 메시지 창 메뉴 버튼 -->
+        <ImageButton
+            android:id="@+id/menu_button"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="0dp"
+            android:background="@android:color/transparent"
+            android:padding="8dp"
+            android:src="@drawable/activity_chat_bars_ic"
+            android:contentDescription="@string/chat_header_menu_btn"/>
+    </RelativeLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_below="@id/message_header_layout"
+        android:layout_above="@id/input_layout"
+        android:background="#000000"
+        android:padding="8dp"
+        tools:listitem="@layout/item_received_message" />
+
+    <!-- 하단 입력 영역 -->
+    <LinearLayout
+        android:id="@+id/input_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:padding="8dp">
+
+        <!-- + 버튼 -->
+        <ImageButton
+            android:id="@+id/button_add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/activity_chat_circle_btn_1"
+            android:src="@drawable/activity_chat_add_btn"
+            android:contentDescription="@string/chat_add_photo"/>
+
+        <!-- 메시지 입력 -->
+        <EditText
+            android:id="@+id/edit_text_message"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/activity_chat_edit_text_background"
+            android:hint="@string/chat_input_message"
+            android:inputType="text"
+            android:padding="15dp"
+            android:autofillHints="username"/>
+
+        <!-- 전송 버튼 -->
+        <ImageButton
+            android:id="@+id/button_send"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/activity_chat_circle_btn_2"
+            android:padding="10dp"
+            android:src="@drawable/activity_chat_arrow_up"
+            android:contentDescription="@string/chat_send_message"/>
+
+    </LinearLayout>
+
+</RelativeLayout>
+
+
+
+</RelativeLayout>
