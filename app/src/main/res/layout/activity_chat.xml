@@ -10,6 +10,7 @@
         android:id="@+id/message_header_layout"
         android:layout_width="match_parent"
         android:layout_height="65dp"
+        android:background="#784315"
         android:padding="8dp">
 
         <!-- 뒤로가기 버튼 -->
@@ -21,9 +22,9 @@
             android:layout_centerVertical="true"
             android:layout_marginStart="0dp"
             android:background="@android:color/transparent"
+            android:contentDescription="@string/chat_header_back_btn"
             android:padding="8dp"
-            android:src="@drawable/activity_chat_back_arrow"
-            android:contentDescription="@string/chat_header_back_btn"/>
+            android:src="@drawable/activity_chat_back_arrow" />
 
         <!-- 채팅방 제목 -->
         <TextView
@@ -31,15 +32,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_toEndOf="@id/back_button"
-            android:layout_toStartOf="@id/search_button"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
+            android:layout_toStartOf="@id/search_button"
+            android:layout_toEndOf="@id/back_button"
+            android:contentDescription="@string/chat_room_title"
             android:ellipsize="end"
-            android:text="@string/chat_title"
             android:maxLines="1"
-            android:textSize="18sp"
-            android:contentDescription="@string/chat_room_title"/>
+            android:text="채팅방 제목"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp" />
 
 
         <!-- 돋보기 버튼 -->
@@ -49,12 +51,12 @@
             android:layout_height="56dp"
             android:layout_alignParentTop="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginEnd="2dp"
+            android:layout_marginEnd="0dp"
             android:layout_toStartOf="@+id/menu_button"
             android:background="@android:color/transparent"
+            android:contentDescription="@string/chat_header_search_btn"
             android:padding="8dp"
-            android:src="@drawable/activity_chat_search_ic"
-            android:contentDescription="@string/chat_header_search_btn"/>
+            android:src="@drawable/activity_chat_search_ic" />
 
 
         <!-- 메시지 창 메뉴 버튼 -->
@@ -67,9 +69,9 @@
             android:layout_alignParentBottom="true"
             android:layout_marginEnd="0dp"
             android:background="@android:color/transparent"
+            android:contentDescription="@string/chat_header_menu_btn"
             android:padding="8dp"
-            android:src="@drawable/activity_chat_bars_ic"
-            android:contentDescription="@string/chat_header_menu_btn"/>
+            android:src="@drawable/activity_chat_bars_ic" />
     </RelativeLayout>
 
     <!-- 검색창 화면 -->
@@ -78,8 +80,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/message_header_layout"
+        android:background="#784315"
         android:orientation="horizontal"
-        android:background="#FFFFFF"
         android:padding="8dp"
         android:visibility="visible">
 
@@ -88,19 +90,20 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:hint="@string/search"
-            android:inputType="text"
             android:background="@drawable/activity_chat_edit_text_background"
-            android:padding="16dp"/>
+            android:hint="검색"
+            android:inputType="text"
+            android:padding="16dp" />
 
         <ImageButton
             android:id="@+id/search_confirm_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/activity_chat_circle_btn_1"
+            android:contentDescription="@string/searchbtn"
             android:padding="10dp"
             android:src="@drawable/activity_chat_arrow_up2"
-            android:contentDescription="@string/searchbtn"/>
+            android:layout_gravity="center_vertical"/>
     </LinearLayout>
 
     <!-- 채팅 메세지 창 -->
@@ -108,11 +111,11 @@
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_below="@id/search_layout"
         android:layout_above="@id/input_layout"
-        android:background="#000000"
+        android:layout_below="@id/search_layout"
+        android:background="#FFFFFF"
         android:padding="8dp"
-        tools:listitem="@layout/item_received_message" />
+        tools:listitem="@layout/custom_chat_msg" />
 
     <!-- 하단 입력 영역 -->
     <LinearLayout
@@ -120,7 +123,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:orientation="horizontal"
+        android:background="#D5D4D4"
         android:gravity="center_vertical"
         android:padding="8dp">
 
@@ -129,9 +132,9 @@
             android:id="@+id/button_add"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/activity_chat_circle_btn_1"
-            android:src="@drawable/activity_chat_add_btn"
-            android:contentDescription="@string/chat_add_photo"/>
+            android:background="@drawable/activity_chat_circle_btn_2"
+            android:contentDescription="@string/chat_add_photo"
+            android:src="@drawable/activity_chat_add_btn" />
 
         <!-- 메시지 입력 -->
         <EditText
@@ -139,11 +142,11 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:autofillHints="username"
             android:background="@drawable/activity_chat_edit_text_background"
-            android:hint="@string/chat_input_message"
+            android:hint="@string/text_message"
             android:inputType="text"
-            android:padding="15dp"
-            android:autofillHints="username"/>
+            android:padding="15dp" />
 
         <!-- 전송 버튼 -->
         <ImageButton
@@ -151,9 +154,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/activity_chat_circle_btn_2"
+            android:contentDescription="@string/chat_send_message"
             android:padding="10dp"
-            android:src="@drawable/activity_chat_arrow_up"
-            android:contentDescription="@string/chat_send_message"/>
+            android:src="@drawable/activity_chat_arrow_up2" />
 
     </LinearLayout>
 

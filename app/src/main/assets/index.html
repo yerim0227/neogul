@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Firebase Chat</title>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js"></script>
+    <script>
+        // Firebase 설정 초기화
+        var firebaseConfig = {
+            apiKey: "AIzaSyA0YiZrqqznys6xpMnQ4bita1w8h-JYWc8",
+            authDomain: "fir-4e2f7.firebaseapp.com",
+            projectId: "fir-4e2f7",
+            storageBucket: "fir-4e2f7.appspot.com",
+            messagingSenderId: "599006571289",
+            appId: "1:599006571289:android:24f8b228aaf2ff30fb7388",
+            databaseURL: "https://fir-4e2f7.firebaseio.com" // 추가
+        };
+        firebase.initializeApp(firebaseConfig);
+
+        // FirebaseChat 객체 생성자
+        function FirebaseChat() {
+            this.init();
+        }
+
+        /**
+         * 초기 필드 변수 할당
+         */
+        FirebaseChat.prototype.init = function() {
+            this.INDEXDB_DB_NAME = "USER";
+            this.INDEXDB_VERSION = 1;
+            this.INDEXDB_STORE = "Users";
+            this.database = firebase.database(); // Realtime Database 초기화
+            this.auth = firebase.auth();
+            this.auth.onAuthStateChanged(this.onAuthChange.bind(this)); // 인증 상태 변경 리스너 추가
+        }
+
+        /**
+         * User 데이터를 IndexedDB에 저장 및 데이터 변경
+         */
+        FirebaseChat.prototype.saveUserAtIndexedDB = function(user, userName, isSave) {
+            if (indexedDB) {
+                var request = indexedDB.open(this.INDEXDB_DB_NAME, this.INDEXDB_VERSION);
+                var objectName = this.INDEXDB_STORE;
+                var self = this;
+
+                request.onupgradeneeded = function() {
+                    var db = request.result;
+                    db.createObjectStore(objectName, { keyPath: "uid" });
+                }
+
+                request.onsuccess = function() {
+                    var db = request.result;
+                    var tx = db.transaction(objectName, "readwrite");
+                    var store = tx.objectStore(objectName);
+
+                    store.get(user.uid).onsuccess = function(event) {
+                        var data = event.target.result;
+                        console.log('IndexedDB query 결과 : ', data);
+                        console.log('saveUserAtIndexedDB isSave 파라미터', isSave);
+
+                        if (!data) {
+                            store.put({
+                                uid: user.uid,
+                                email: user.email,
+                                photoURL: user.photoURL ? user.photoURL : '',
+                                displayName: userName ? userName : user.displayName,
+                                isSave: false
+                            });
+                        }
+
+                        if (data && isSave) {
+                            store.put({
+                                uid: user.uid,
+                                email: user.email,
+                                photoURL: user.photoURL ? user.photoURL : '',
+                                displayName: userName ? userName : user.displayName,
+                                isSave: true
+                            });
+                        }
+                    }
+
+                    tx.oncomplete = function() {
+                        console.log('IndexedDB 트랜잭션 완료');
+                        db.close();
+                    };
+                }
+            }
+        }
+
+        /**
+         * 이메일로 가입 처리
+         */
+        FirebaseChat.prototype.createEmailUser = function(email, password, userName) {
+            var self = this;
+            firebase.auth().createUserWithEmailAndPassword(email, password)
+                .then(function(userCredential) {
+                    var user = userCredential.user;
+                    self.saveUserAtIndexedDB(user, userName, false);
+                    console.log('이메일로 사용자 생성 성공');
+                })
+                .catch(function(error) {
+                    console.error('이메일로 사용자 생성 실패', error);
+                });
+        }
+
+        /**
+         * 지속성 설정 후 sign-in 팝업창
+         */
+        FirebaseChat.prototype.signInWithPopup = function(provider) {
+            var self = this;
+            firebase.auth().signInWithPopup(provider)
+                .then(function(result) {
+                    console.log('로그인 성공');
+                    self.saveUserAtIndexedDB(result.user, null, false);
+                })
+                .catch(function(error) {
+                    console.error('로그인 실패', error);
+                });
+        }
+
+        /**
+         * 인증 상태 변경 핸들러
+         */
+        FirebaseChat.prototype.onAuthChange = function(user) {
+            if (user) {
+                console.log('user 로그인 : ', JSON.stringify(user));
+                this.setLogin(user);
+            } else {
+                console.log('로그아웃');
+                this.setLogOut();
+            }
+        }
+
+        /**
+         * 로그인 후 세팅
+         */
+        FirebaseChat.prototype.setLogin = function(user) {
+            this.checkAndSaveUser(user);
+        }
+
+        /**
+         * 신규 User를 IndexedDB에서 체크 후 저장
+         */
+        FirebaseChat.prototype.checkAndSaveUser = function(user) {
+            try {
+                var request = indexedDB.open(this.INDEXDB_DB_NAME, this.INDEXDB_VERSION);
+                var objectName = this.INDEXDB_STORE;
+                var self = this;
+
+                request.onsuccess = function() {
+                    var db = request.result;
+                    var tx = db.transaction(objectName, "readwrite");
+                    var store = tx.objectStore(objectName);
+
+                    store.get(user.uid).onsuccess = function(event) {
+                        var data = event.target.result;
+                        console.log('IndexedDB query 결과 : ', data);
+                        console.log('checkAndSaveUser isSave', data.isSave);
+                        if (!data.isSave) {
+                            self.saveUserAtRealDB(data);
+                        }
+                    }
+
+                    tx.oncomplete = function() {
+                        console.log('IndexedDB 트랜잭션 완료');
+                        db.close();
+                    };
+                }
+            } catch (e) {
+                this.saveUserAtRealDB(user);
+            }
+        }
+
+        /**
+         * Realtime Database에서 Users 데이터를 체크 후 저장
+         */
+        FirebaseChat.prototype.saveUserAtRealDB = function(user) {
+            var userRef = this.database.ref('Users/' + user.uid);
+            var self = this;
+
+            var cbUserRefResult = function(dataSnapshot) {
+                if (!dataSnapshot.hasChildren()) {
+                    console.log('saveUserAtRealDB 저장');
+                    userRef.set({
+                        email: user.email,
+                        profileImg: user.photoURL ? user.photoURL : '',
+                        userName: user.displayName
+                    }).then(cbUserAfterSave.bind(self));
+                }
+            }
+
+            var cbUserAfterSave = function() {
+                this.saveUserAtIndexedDB(user, null, true);
+            }
+
+            userRef.once('value').then(cbUserRefResult.bind(this));
+        }
+
+        function createUser() {
+            var email = "test@example.com";
+            var password = "password";
+            var userName = "Test User";
+            chat.createEmailUser(email, password, userName);
+        }
+
+        function signInWithGoogle() {
+            var provider = new firebase.auth.GoogleAuthProvider();
+            chat.signInWithPopup(provider);
+        }
+
+        var chat = new FirebaseChat();
+    </script>
+</head>
+<body>
+<h1>Firebase Chat</h1>
+<button onclick="createUser()">Create User</button>
+<button onclick="signInWithGoogle()">Sign In with Google</button>
+</body>
+</html>
