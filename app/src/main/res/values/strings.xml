@@ -16,4 +16,7 @@
     <string name="received_time">12:00 PM</string>
     <string name="sent_time">12:00 PM</string>
     <string name="sent_message">Sent message</string>
+    <string name="search_text">Search...</string>
+    <string name="search">Search...</string>
+    <string name="searchbtn">Search</string>
 </resources>
