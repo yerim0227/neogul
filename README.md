@@ -52,6 +52,6 @@
 - Android Studio
 
 ## Realtime database
-![image](https://github.com/yerim0227/neogul/assets/91422659/35094a5d-44a9-4e12-9be9-5ee972d01f77
+![image](https://github.com/yerim0227/neogul/assets/91422659/a56f8b02-67d9-4f0c-92f4-238111994518)
 
  
