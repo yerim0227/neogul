@@ -34,15 +34,18 @@
       - 도움을 받고자 하는 문제를 찍어 업로드 할 수 있다.
 
 ## 이미지
--앱 아이콘
+![image](https://github.com/yerim0227/neogul/assets/91422659/b084fb3d-f6c0-4f03-81f8-2eb837f0206a)
 
-- 앱 시작화면
+
 ![image](https://github.com/yerim0227/neogul/assets/91422659/d7b543fe-e905-42a0-b876-891f2eaa8d1b)
--로그인 화면
+
+
 ![image](https://github.com/yerim0227/neogul/assets/91422659/349e3635-9b0f-4d5f-8cbd-5d49e3a8fff0)
--화원가입 화면
+
+
 ![image](https://github.com/yerim0227/neogul/assets/91422659/df9c63cb-6bbc-4f1e-a7e2-eaf864a1050d)
--채팅창 화면
+
+
 ![image](https://github.com/yerim0227/neogul/assets/91422659/35094a5d-44a9-4e12-9be9-5ee972d01f77)
 ## 🛠️기술 스택
 - Java
