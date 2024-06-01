@@ -3,4 +3,17 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
+    <string name="chat_title">텍스트 제목</string>
+    <string name="menu_back_button">뒤로가기 버튼</string>
+    <string name="chat_header_back_btn">뒤로가기 버튼</string>
+    <string name="chat_header_search_btn">특정 단어 검색 기능</string>
+    <string name="chat_header_menu_btn">메뉴 버튼</string>
+    <string name="chat_add_photo">사진 추가 버튼</string>
+    <string name="chat_input_message">메세지 입력</string>
+    <string name="chat_send_message">메세지 전송 버튼</string>
+    <string name="chat_room_title">채팅방 제목</string>
+    <string name="received_message">Received message</string>
+    <string name="received_time">12:00 PM</string>
+    <string name="sent_time">12:00 PM</string>
+    <string name="sent_message">Sent message</string>
 </resources>
