@@ -5,10 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".MainActivity">
 
-    <!-- RecyclerView for displaying chat messages -->
-
-    <!-- Layout for message input and send button -->
-
+    <!-- 메세지 헤더 -->
     <RelativeLayout
         android:id="@+id/message_header_layout"
         android:layout_width="match_parent"
@@ -84,7 +81,7 @@
         android:orientation="horizontal"
         android:background="#FFFFFF"
         android:padding="8dp"
-        android:visibility="gone">
+        android:visibility="visible">
 
         <EditText
             android:id="@+id/search_input"
@@ -100,12 +97,13 @@
             android:id="@+id/search_confirm_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/activity_chat_circle_btn_2"
+            android:background="@drawable/activity_chat_circle_btn_1"
             android:padding="10dp"
-            android:src="@drawable/activity_chat_arrow_up"
+            android:src="@drawable/activity_chat_arrow_up2"
             android:contentDescription="@string/searchbtn"/>
     </LinearLayout>
 
+    <!-- 채팅 메세지 창 -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
